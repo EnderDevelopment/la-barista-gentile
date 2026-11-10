@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skin Minecraft: Barista</title>
+<style>
+:root{color-scheme:light;background:#f3f1e9;color:#292d26;font:16px system-ui,sans-serif}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px}.wrap{width:min(720px,100%);text-align:center}h1{font-size:24px;margin:0 0 8px}p{margin:0 0 20px;color:#62675e}.preview{display:inline-block;background:#fff;border:1px solid #d8d9d0;padding:20px;border-radius:6px;image-rendering:pixelated}canvas{width:min(384px,70vw);height:min(384px,70vw);image-rendering:pixelated;image-rendering:crisp-edges;display:block;background-color:#eee;border:1px solid #e4e4df;/* Canvas preview enlarged from native texture. */}button{display:block;margin:18px auto 0;border:0;border-radius:4px;background:#52745a;color:white;font:inherit;font-weight:600;padding:11px 18px;cursor:pointer}button:hover{background:#3e6048}button:focus-visible{outline:3px solid #c48a4a;outline-offset:3px}.note{font-size:13px;margin-top:14px}
+</style>
+</head>
+<body>
+<main class="wrap">
+<h1>Skin Minecraft: Barista</h1>
+<p>Texture classica 64 × 64, modello standard a braccia larghe.</p>
+<div class="preview"><canvas id="skin" width="64" height="64" aria-label="Anteprima pixel della skin barista"></canvas></div>
+<button id="download" type="button">Scarica skin PNG</button>
+<p class="note">Importa il PNG nel profilo Minecraft scegliendo il modello standard.</p>
+</main>
+<script>
+const canvas=document.getElementById('skin');
+const ctx=canvas.getContext('2d');
+ctx.imageSmoothingEnabled=false;
+const C={skin:'#f2c5a1',shadow:'#d99e7d',hair:'#51372e',hairLight:'#76503b',hat:'#fff1d3',hatShade:'#d8cba8',green:'#68866a',greenDark:'#49634d',greenLight:'#8da087',shirt:'#efe7d5',shirtShade:'#d5cbb6',brown:'#704a32',coffee:'#8b5735',black:'#453c35',white:'#fffaf0'};
+function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(x,y,w,h)}
+function face(x,y,w,h,base,accent){rect(x,y,w,h,base);for(let i=0;i<w;i+=4){rect(x+i,y+h-1,2,1,accent)} }
+// Head: front, back, sides, top and bottom UV faces.
+face(8,8,8,8,C.skin,C.shadow);face(24,8,8,8,C.hair,C.hairLight);
+face(0,8,8,8,C.hair,C.hairLight);face(16,8,8,8,C.hair,C.hairLight);face(32,8,8,8,C.hair,C.hairLight);face(40,8,8,8,C.hair,C.hairLight);
+// Front face details: eyes, blush, smile, and bangs.
+rect(8,8,8,2,C.hair);rect(9,10,2,1,C.hairLight);rect(14,10,2,1,C.hairLight);
+rect(9,12,1,1,C.black);rect(14,12,1,1,C.black);rect(10,13,1,1,C.shadow);rect(13,13,1,1,C.shadow);
+rect(11,14,2,1,C.brown);rect(10,11,1,1,'#e99e91');rect(14,11,1,1,'#e99e91');
+// Barista cap on the outer head layer.
+face(40,8,8,8,C.hat,C.hatShade);face(48,8,8,8,C.hat,C.hatShade);face(32,8,8,8,C.hat,C.hatShade);face(56,8,8,8,C.hat,C.hatShade);
+rect(8,0,8,8,C.hat);rect(8,0,8,2,C.hatShade);rect(11,3,2,2,C.brown);rect(12,3,1,1,'#dba85e');
+// Side hair and long locks.
+rect(0,8,1,8,C.hair);rect(7,8,1,8,C.hair);rect(16,8,1,8,C.hair);rect(23,8,1,8,C.hair);
+// Torso base UV faces.
+face(20,20,8,12,C.shirt,C.shirtShade);face(28,20,8,12,C.shirt,C.shirtShade);face(16,20,4,12,C.shirtShade,C.shirt);face(36,20,4,12,C.shirtShade,C.shirt);face(20,16,8,4,C.shirt,C.shirtShade);face(28,16,8,4,C.shirtShade,C.shirt);
+// Apron on torso front.
+rect(20,22,8,10,C.green);rect(20,22,8,1,C.greenDark);rect(20,22,1,10,C.greenDark);rect(27,22,1,10,C.greenDark);
+rect(23,24,2,2,C.white);rect(23,24,1,2,C.coffee);rect(25,25,1,2,C.coffee);rect(22,29,4,1,C.greenLight);
+// Neck and collar.
+rect(22,20,4,2,C.skin);rect(21,20,1,2,C.hatShade);rect(26,20,1,2,C.hatShade);
+// Arm UVs, matching both standard arm layouts.
+function arm(x,shirt){face(x+4,20,4,12,shirt,C.shirtShade);face(x+8,20,4,12,shirt,C.shirtShade);face(x,20,4,12,shirt,C.shirtShade);face(x+12,20,4,12,shirt,C.shirtShade);face(x+4,16,4,4,shirt,C.shirtShade);face(x+8,16,4,4,shirt,C.shirtShade);
+rect(x+4,20,4,2,C.green);rect(x+5,21,2,1,C.greenDark);rect(x+4,30,4,2,C.skin);rect(x+8,30,4,2,C.skin);rect(x,30,4,2,C.skin);rect(x+12,30,4,2,C.skin);}
+arm(40,C.shirt);arm(32,C.shirt);
+// Legs: dark café trousers and warm brown shoes.
+function leg(x){face(x+4,20,4,12,C.greenDark,C.green);face(x+8,20,4,12,C.greenDark,C.green);face(x,20,4,12,C.greenDark,C.green);face(x+12,20,4,12,C.greenDark,C.green);face(x+4,16,4,4,C.greenDark,C.green);face(x+8,16,4,4,C.greenDark,C.green);rect(x+4,28,4,4,C.brown);rect(x+8,28,4,4,C.brown);rect(x,28,4,4,C.brown);rect(x+12,28,4,4,C.brown);}
+leg(0);leg(16);
+// Light pixel highlights give the fabric a hand-crafted texture.
+rect(21,24,1,1,C.greenLight);rect(26,27,1,1,C.greenLight);rect(41,24,1,1,C.white);rect(33,24,1,1,C.white);
+</script>
+<script>
+document.getElementById('download').addEventListener('click',()=>{const link=document.createElement('a');link.download='minecraft-barista-skin.png';link.href=canvas.toDataURL('image/png');link.click()});
+</script>
+</body>
+</html>
